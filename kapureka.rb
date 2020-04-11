@@ -1,87 +1,54 @@
-def difference(m, hash, results)
-  max = m.to_s.split(//).sort.reverse.join.to_i
-  min_a = m.to_s
-  if min_a.include?("0")
-    min_a = min_a.delete("0")
-  end
-  min_a = min_a.to_s.split(//).sort.join.to_i
+def kaprekar(i, kaprekar_arry)
+  # 1~9(数字の各桁)を配列に格納
+  numbers = (0..9).to_a
 
-  # puts min_a
-  # puts max
- 
-  dif = max - min_a
-  # puts dif
-  count = 0
+  # c_ary= m桁のnumberのパターン全て。(順番が異なっても同一とみなす) 
+  numbers.repeated_combination(i){|c_ary|
+    # # カプレカ関数が9の倍数であることを利用
+    if c_ary.inject(:+) % 9 == 0
 
-  if results.include?(dif) 
-    puts "OK"
-    p hash.push(dif)
-    results << hash.group_by{|e| e}.select{|k, v|v.size > 1}.map(&:first)
-    p results
-  else
-    while count < 20 
-      puts "NG"
-      hash.push(dif)
-      results = []
-      difference(dif, hash.push(dif), results)
+    # 配列を数値に直す
+      min = c_ary.join.to_i
+      max = c_ary.reverse.join.to_i
+
+    # dif=最大値を最小値の差
+      dif = max - min
+      
+    # difを文字列に変換（splitはintegerにはできないため）。splitで、difの各位を配列の要素に変換。
+    # difを数値に戻す（.map(&:to_i)）。c_aryの順番に合わせるため、昇順に変換（sort）
+    kaprekar_arry.push(dif) if c_ary == dif.to_s.split('').map(&:to_i).sort
+    
     end
-      conunt += 1
+    }
+
+end
+
+def create_kaprekar
+  # iは桁数
+  i = 1
+  kaprekar_arry = []
+
+  while  1 <= i && i<=  15
+  kaprekar(i, kaprekar_arry)
+  i += 1
   end
+  return kaprekar_arry
 end
 
 
-
-difference(1020, [], [])
-
-# # //１桁に発生しえる数字（0〜9）
-# numbers = (0..9).to_a
-# p numbers
-# # numrepeated_combination(14)　14桁の数字の組み合わせを全てをハッシュに入れる
-# count = 0
-# p numbers.repeated_combination(14){|c_arry|
-
-#   # カプレカ数は9の倍数なので、９の倍数（各位の和が9）のみを抽出し、配列に入れる
-#   if c_arry.inject(:+) % 9 == 0
-#     count += 1
-#   end
-# }
-# puts count
+def search_kaprekar(n)
+  kaprekar_arry = create_kaprekar.sort
+  kaprekar_arry.map{|kaprekar| 
+  return kaprekar if n <= kaprekar
+  }
+end
 
 
+puts "半角で数字を入力してください"
+n = gets.to_i
+puts "0 ≦ n ≦ 100,000,000,000,000のとき"
+puts "n以上かつ、nに一番近い値のカプレカ数は、"
+puts "（10秒ほどお待ちください）"
+puts "#{search_kaprekar(n).to_s.gsub(/(\d)(?=(\d{3})+(?!\d))/, '\1,')}　です"
 
-
-
-
-# def kapureka(m)
-#   numbers = (0..14).to_a
-#   numbers.repeated_combination(m){|c_ary|
-#     # 後述のnが９の倍数ということはc_aryの和も９の倍数
-#     if c_ary.inject(:+) % 9 == 0
-#       min_ary = c_ary.clone
-#       max = min_ary.reverse.join.to_i
-#       # 最高位を0以外にする←カプレカ数との違い
-#       i = 0
-#       while min_ary[i] == 0
-#         i += 1
-#       end
-#       min_ary[0], min_ary[i] = min_ary[i], min_ary[0]
-#       min = min_ary.join.to_i
-#       n = max - min
-#       p [m, c_ary, n] if c_ary == n.to_s.split('').map(&:to_i).sort
-#     end
-#   }
-# end
-
-# (2..15).each{|m| kapureka(m)}
-
-# def kapureka(m)
-#   m = m.to_s
-#   if m.include?("0")
-#     m = m.delete("0")
-
-#   end
-#   puts m
-# end
-
-# kapureka(3990)
 

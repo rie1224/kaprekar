@@ -3,8 +3,8 @@
 #  標準入力用メソッド
 def input_search_num(kaprekar_arry)
   puts ""
-  puts "0 ≦ n ≦ 100,000,000,000,000のとき"
-  puts "半角数字でnを入力してください"
+  puts "0 ≦ n ≦ 100,000,000,000,000の範囲内で"
+  puts "n（半角数字）を入力してください"
   n = gets.to_i
   if 0 <= n && n <= 100000000000000
     puts ""

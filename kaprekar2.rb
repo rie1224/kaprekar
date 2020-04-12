@@ -1,4 +1,4 @@
-# カプレカ数が9の倍数であることを利用する場合（初回の標準入力→出力までの速度は10秒ほどです）
+# カプレカ数が9の倍数であることを利用しない場合（標準入力→出力までの速度は1分ほどです）
 
 # カプレカ数が入った配列を作成するためのメソッド（初回の標準入力のみで使用）
 def create_kaprekar
@@ -9,9 +9,6 @@ def create_kaprekar
 
     # n_ary= m桁のnumberのパターン全て。(順番が異なっても同一とみなす) 
     numbers.repeated_combination(i){|n_ary|
-
-      #　カプレカ関数が9の倍数であることを利用
-      if n_ary.inject(:+) % 9 == 0
 
       # 最大値と最小値を求め、配列を数値に戻す(join.to_i)
         min = n_ary.join.to_i
@@ -24,7 +21,6 @@ def create_kaprekar
       # difを文字列に変換（splitはintegerにはできないため）。splitで、difの各位を配列の要素に変換。
       # difを数値に戻す（.map(&:to_i)）。n_aryの順番に合わせるため、昇順に変換（sort）
         kaprekar_arry.push(dif) if n_ary == dif.to_s.split('').map(&:to_i).sort
-      end
       }
   end
   return kaprekar_arry
@@ -48,7 +44,7 @@ def input_search_num(kaprekar_arry)
   if 0 <= n && n <= 100000000000000
     puts ""
     puts "n以上かつ、nに一番近い値のカプレカ数は・・"
-    puts "（初回のみ10秒程お待ちください）" if kaprekar_arry.empty?
+    puts "（初回のみ1分程お待ちください）" if kaprekar_arry.empty?
     results = search_kaprekar(n, kaprekar_arry)
     puts "#{results[0].to_s.gsub(/(\d)(?=(\d{3})+(?!\d))/, '\1,')}　です"
   else

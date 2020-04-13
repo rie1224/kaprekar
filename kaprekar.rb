@@ -39,7 +39,7 @@ def create_kaprekar
     # 1~9(数字の各桁)を配列に格納
     numbers = (0..9).to_a
 
-    # n_arry= m桁のnumberのパターン全てを列挙。(順番が異なっても同一とみなす) 
+    # n_arry= i桁のnumberのパターン全てを列挙。(順番が異なっても同一とみなす) 
     numbers.repeated_combination(i){|n_arry|
 
       #カプレカ関数が9の倍数であることを利用
